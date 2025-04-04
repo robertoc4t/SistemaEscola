@@ -1,15 +1,24 @@
-import json  # Importa a biblioteca para salvar e carregar os dados em JSON
+import os
+import json
 
-# Nome do arquivo onde os dados serão salvos
 ARQUIVO_DADOS = "alunos.json"
 
+# Garante que o arquivo exista e esteja com um dicionário vazio, se não existir ainda
+if not os.path.exists(ARQUIVO_DADOS):
+    with open(ARQUIVO_DADOS, "w") as f:
+        json.dump({}, f, indent=4)
 # Função para carregar os dados do arquivo JSON
 def carregar_dados():
-    try:
-        with open(ARQUIVO_DADOS, "r") as f:  # Abre o arquivo no modo leitura
-            return json.load(f)  # Carrega os dados do arquivo
-    except FileNotFoundError:
-        return {print('Arquivo não existe!')}  # Se o arquivo não existir, retorna um dicionário vazio
+    if os.path.exists(ARQUIVO_DADOS):
+        with open(ARQUIVO_DADOS, "r") as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                print("Erro ao carregar dados. Iniciando com um dicionário vazio.")
+                return {}  # <- Aqui é o ponto importante!
+    else:
+        print("Arquivo não existe!")
+        return {}  # <- Aqui também!
 
 # Função para salvar os dados no arquivo JSON
 def salvar_dados(dados):
