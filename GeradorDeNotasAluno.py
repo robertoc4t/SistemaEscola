@@ -1,7 +1,9 @@
 import os
 import json
 
-ARQUIVO_DADOS = "alunos.json"
+ARQUIVO_DADOS = (r"alunos.json")
+
+
 
 # Garante que o arquivo exista e esteja com um dicionário vazio, se não existir ainda
 if not os.path.exists(ARQUIVO_DADOS):
